@@ -1,0 +1,65 @@
+#Compiler
+CC = clang++
+
+#Compiler flags
+CPPFLAGS = -std=c++11 -Wall -c -g
+
+#Object files
+OBJ = database.o command_facade.o table.o server.o command.o insert_PK_Command.o\
+make_table_command.o create_command.o set_table_command.o insert_command.o\
+get_command.o get_all_command.o delete_command.o update_command.o\
+transaction_commands.o main.o
+
+output: $(OBJ)
+	$(CC) $(OBJ)
+
+database.o: database.h database.cpp
+	$(CC) $(CPPFLAGS) database.cpp
+
+table.o: table.h table.cpp
+	$(CC) $(CPPFLAGS) table.cpp
+
+server.o: server.h server.cpp
+	$(CC) $(CPPFLAGS) server.cpp
+
+command.o: commands.h command.cpp
+	$(CC) $(CPPFLAGS) command.cpp
+
+make_table_command.o: commands.h make_table_command.cpp
+	$(CC) $(CPPFLAGS) make_table_command.cpp
+
+create_command.o: commands.h create_command.cpp
+	$(CC) $(CPPFLAGS) create_command.cpp
+
+set_table_command.o: commands.h set_table_command.cpp
+	$(CC) $(CPPFLAGS) set_table_command.cpp
+
+insert_PK_Command.o: commands.h insert_PK_command.cpp
+	$(CC) $(CPPFLAGS) insert_PK_command.cpp
+
+insert_command.o: commands.h insert_command.cpp
+	$(CC) $(CPPFLAGS) insert_command.cpp
+
+command_facade.o: command_facade.h command_facade.cpp
+	$(CC) $(CPPFLAGS) command_facade.cpp
+
+get_command.o: commands.h get_command.cpp
+	$(CC) $(CPPFLAGS) get_command.cpp
+
+get_all_command.o: commands.h get_all_command.cpp
+	$(CC) $(CPPFLAGS) get_all_command.cpp
+
+delete_command.o: commands.h delete_command.cpp
+	$(CC) $(CPPFLAGS) delete_command.cpp
+
+update_command.o: commands.h update_command.cpp
+	$(CC) $(CPPFLAGS) update_command.cpp
+
+transaction_commands.o: commands.h transaction_commands.cpp
+	$(CC) $(CPPFLAGS) transaction_commands.cpp
+
+main.o: main.cpp
+	$(CC) $(CPPFLAGS) main.cpp
+
+clean:
+	rm *.o
