@@ -38,7 +38,6 @@ public:
   vector<SchemaObj> schema;
   unordered_map<string, int> rows;
   unordered_map<string, int> columns;
-  //queue<string> request;
   queue<WriteJob> to_write;
 
   void add_column(string name, int size);

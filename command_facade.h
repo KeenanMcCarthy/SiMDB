@@ -2,7 +2,6 @@
 #define COMMAND_FACADE_H
 
 #include<string>
-//#include"commands.h"
 
 class Database;
 class Command;
