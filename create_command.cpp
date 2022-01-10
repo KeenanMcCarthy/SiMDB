@@ -6,16 +6,14 @@ Create_Command::Create_Command(Database* db): Command(db){}
 string Create_Command::command(string command, int ind){
   int delimeter = command.find_first_of(",;", ind);
   if (delimeter == string::npos){
-    db->clear_queue();
-    db->roll_back();
+    db->rollback();
     return "ERROR: NOT VALID INPUT\n";
   }
   string element = command.substr(ind, delimeter-ind);
   trim_whitespace(element);
   int space_ind = element.find_first_of(" ");
   if (space_ind == string::npos){
-    db->clear_queue();
-    db->roll_back();
+    db->rollback();
     return "ERROR: NOT VALID INPUT\n";
   }
   string name = element.substr(0, space_ind);
@@ -27,8 +25,7 @@ string Create_Command::command(string command, int ind){
     return commands["addValue"]->command(command, delimeter+1);
   } else if (command[delimeter] == ';'){
     db->submit_job_to_queue(name + " " + size + ";\n", "SCHEMA");
-    db->commit_queue_to_disk();
-    db->clear_stack();
+    db->commit();
     return "Table Created\n";
   }
   return "Error";

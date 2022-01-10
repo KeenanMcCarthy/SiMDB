@@ -20,6 +20,8 @@ Command_Facade::Command_Facade(Database* db){
   Trxn_Command* trxn_command = new Trxn_Command(db);
   Start_Trxn_Command* start_trxn_command = new Start_Trxn_Command(db);
   End_Trxn_Command* end_trxn_command = new End_Trxn_Command(db);
+  Condition_Command* condition_command = new Condition_Command(db);
+  In_Command* in_command = new In_Command(db);
   insert_pk->add_command("addValue", insert);
   insert->add_command("addValue", insert);
   root->add_command("CREATE", make_table);
@@ -30,6 +32,10 @@ Command_Facade::Command_Facade(Database* db){
   root->add_command("TRANSACTION", trxn_command);
   make_table->add_command("addSchema", create);
   root->add_command("INSERT", set_table_pk);
+  in_command->add_command("ROOT", root);
+  get_all->add_command("COND", condition_command);
+  get_all->add_command("PARENTHESES", get_all);
+  get_all->add_command("IN", in_command);
   get->add_command("*", get_all);
   root->add_command("GET", set_table_get);
   set_table_pk->add_command("addValue", insert_pk);

@@ -9,8 +9,7 @@ string Insert_Command::command(string command, int ind){
   trim_whitespace(name);
   Table::SchemaObj so = get_current_table()->schema[get_current_table()->table.back().size()];
   if (name.size() > so.size){
-    db->roll_back();
-    db->clear_queue();
+    db->rollback();
     return "Value too large, schema size: " + to_string(so.size) + " value size: " + to_string(name.size()) + '\n';
   }
   int schema_index = get_current_table()->table.back().size();
@@ -21,12 +20,10 @@ string Insert_Command::command(string command, int ind){
   } else if (command[delimeter] == ';' &&
 get_current_table()->table.back().size() == get_current_table()->schema.size()){
     db->submit_job_to_queue(name + '\n', "VALUE " + to_string(schema_index));
-    db->commit_queue_to_disk();
-    db->clear_stack();
+    db->commit();
     return "Values inserted\n";
   } else {
-    db->roll_back();
-    db->clear_queue();
+    db->rollback();
     return "NOT VALID INPUT\n";
   }
 }

@@ -32,13 +32,16 @@ class Database{
 public:
   Command_Facade* commander;
   unordered_map<string, Table*> tables;
-  Table* current_table;
+  stack<Table*> current_table;
   queue<CommitJob> disk_commit_queue;
   stack<RollbackObj> rollback_stack;
   bool in_transaction;
+  bool to_rollback;
 
   Database();
 
+  void commit();
+  void rollback();
   void start_commandline();
   void submit_job_to_queue(string data, string operation);
   void commit_queue_to_disk();
@@ -51,7 +54,7 @@ public:
   void clear_stack();
   void add_to_rollback(Command* command, string params);
   void add_to_rollback(Command* command);
-  void roll_back();
+  void roll_back_stack();
 };
 
 #endif

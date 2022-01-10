@@ -6,7 +6,16 @@ Command::Command(Database* db){
 }
 
 Table* Command::get_current_table(){
-  return this->db->current_table;
+  if (db->current_table.empty()){
+    return nullptr;
+  }
+  return this->db->current_table.top();
+}
+
+void Command::to_uppercase(string& str){
+  for (int i=0; i<str.length(); i++){
+    str[i] = toupper(str[i]);
+  }
 }
 
 void Command::add_command(string name, Command* command){
@@ -34,9 +43,11 @@ string Root_Command::command(string command, int ind){
   trim_whitespace_left(command);
   int delimeter_ind = command.find_first_of(" ", ind);
   string element = command.substr(ind, delimeter_ind-ind);
+  to_uppercase(element);
   if (commands.find(element) != commands.end()){
     return commands[element]->command(command, delimeter_ind+1);
   } else {
+    db->rollback();
     return "NOT VALID INPUT\n";
   }
 }

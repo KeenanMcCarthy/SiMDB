@@ -18,7 +18,6 @@ string Make_Table_Command::command(string command, int ind){
 
 void Make_Table_Command::rollback(string params){
   db->tables.erase(params);
-  db->current_table = nullptr;
   try {
     std::__fs::filesystem::remove("tables/"+params+".txt");
   } catch (const std::__fs::filesystem::filesystem_error& err){

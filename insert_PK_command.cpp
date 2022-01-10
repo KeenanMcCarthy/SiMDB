@@ -10,6 +10,7 @@ string Insert_PK_Command::command(string command, int ind){
   db->add_to_rollback(this, pk_name);
   Table::SchemaObj co = get_current_table()->schema[0];
   if (pk_name.size() > co.size){
+    db->rollback();
     return "Value too large, schema size: " + to_string(co.size) + " value size: " + to_string(pk_name.size()) + '\n';
   }
   get_current_table()->rows[pk_name] = get_current_table()->table.size();
@@ -20,10 +21,10 @@ string Insert_PK_Command::command(string command, int ind){
   } else if (command[delimeter] == ';' &&
   get_current_table()->table.back().size() == get_current_table()->schema.size()){
     db->submit_job_to_queue(pk_name+'\n', "VALUE " + to_string(0));
-    db->commit_queue_to_disk();
+    db->commit();
     return "Values inserted\n";
   } else {
-    db->clear_queue();
+    db->rollback();
     return "ERROR: NOT VALID INPUT\n";
   }
 }

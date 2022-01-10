@@ -4,8 +4,9 @@ using namespace std;
 
 Database::Database(){
   commander = new Command_Facade(this);
-  current_table = nullptr;
+  current_table = stack<Table*>();
   in_transaction = false;
+  to_rollback = false;
   for (const auto& file: std::__fs::filesystem::directory_iterator("./tables")){
     string path = file.path();
     int last_slash_ind = path.find_last_of('/');
@@ -26,6 +27,23 @@ Database::RollbackObj::RollbackObj(Command* command, string params){
   this->params = params;
 }
 
+void Database::commit(){
+  if (in_transaction){
+    return;
+  }
+  commit_queue_to_disk();
+  clear_stack();
+}
+
+void Database::rollback(){
+  if (in_transaction){
+    to_rollback = true;
+    return;
+  }
+  roll_back_stack();
+  clear_queue();
+}
+
 void Database::start_commandline(){
   string input;
   getline(cin, input);
@@ -36,11 +54,10 @@ void Database::start_commandline(){
 }
 
 void Database::submit_job_to_queue(string data, string operation){
-  disk_commit_queue.push(CommitJob(current_table, data, operation));
+  disk_commit_queue.push(CommitJob(current_table.top(), data, operation));
 }
 
 void Database::commit_queue_to_disk(){
-  if (in_transaction) return;
   while (!disk_commit_queue.empty()){
     CommitJob commit_job = disk_commit_queue.front();
     disk_commit_queue.pop();
@@ -84,14 +101,11 @@ void Database::add_to_rollback(Command* command){
   rollback_stack.push(RollbackObj(command, ""));
 }
 
-void Database::roll_back(){
+void Database::roll_back_stack(){
   while (!rollback_stack.empty()){
     RollbackObj rbo = rollback_stack.top();
     rollback_stack.pop();
     rbo.command->rollback(rbo.params);
-  }
-  if (in_transaction){
-    in_transaction = false;
   }
 }
 
@@ -101,7 +115,7 @@ void Database::add_table(string name){
 
 void Database::set_cur_table(string name){
   if (tables.find(name) != tables.end()){
-    current_table = tables[name];
+    current_table.push(tables[name]);
     return;
   }
   cout << "Table does not exist" << endl;

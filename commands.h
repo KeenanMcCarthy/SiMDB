@@ -16,6 +16,7 @@ public:
   virtual string command(string command, int ind) = 0;
   virtual void rollback(string params);
   Table* get_current_table();
+  void to_uppercase(string& str);
   void add_command(string name, Command* command);
   void trim_whitespace_left(string& str);
   void trim_whitespace_right(string& str);
@@ -58,6 +59,8 @@ public:
 class Get_All_Command: public Command{
 public:
   Get_All_Command(Database* db);
+  string get_conditional_response(string command, int ind);
+  int skip_parenthese(string command, int ind);
   string command(string command, int ind);
 };
 
@@ -104,6 +107,19 @@ public:
   Update_Command(Database* db);
   string command(string command, int ind);
   void rollback(string params);
+};
+
+class Condition_Command: public Command{
+public:
+  Condition_Command(Database* db);
+  bool evaluate(int row_ind, string field, string value, string op);
+  string command(string command, int ind);
+};
+
+class In_Command: public Command{
+public:
+  In_Command(Database* db);
+  string command(string command, int ind);
 };
 
 #endif

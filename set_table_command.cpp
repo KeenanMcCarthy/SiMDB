@@ -18,5 +18,5 @@ string Set_Table_Command::command(string command, int ind){
 }
 
 void Set_Table_Command::rollback(string params){
-  db->set_cur_table(params);
+  db->current_table.pop();
 }
