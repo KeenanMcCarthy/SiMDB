@@ -1,15 +1,15 @@
 # SiMDB
-  This is an in memory database that uses threads running in the background to backup changes to disk. 
-In the event of a failure, the database can be recovered from the back up, thus ensuring that the data 
+  This is an in memory database that uses threads running in the background to backup changes to disk.
+In the event of a failure, the database can be recovered from the back up, thus ensuring that the data
 recovered is as up to date as possible (barring updates lost in the backup queue at the time of failure).
 Therefore, end users can benefit from the speed of an in-memory database, and enjoy a significant degree
-of persistence and recoverablility. 
+of persistence and recoverablility.
 
   In order to run the database first build the executable with the following command:
 make -f Makefile
 
   To run the database in interactive mode, run the executable without any command-line parameters.
-If you would like to run the database in server mode, include the keyword SERVER as the first 
+If you would like to run the database in server mode, include the keyword SERVER as the first
 parameter. The database runs on port 3490 by default, however the port may be modified by providing
 an additional command-line parameter denoting the desired port. (ex. ./a.out SERVER 8080)
 
@@ -21,7 +21,7 @@ CREATE tablename: column_name size, column_name size, ... ;
 Ex: CREATE employees: employeeID 5, first_name 10, last_name 10, department 12, salary 7;
 ```
 The first element of the schema will always serve as the primary key for the table, and the
-size of the column denotes the maximum number of characters which a field in that column may have. 
+size of the column denotes the maximum number of characters which a field in that column may have.
 
 ### Add to a table:<br />
 ```
@@ -87,4 +87,3 @@ DELETE tablename;
 Ex: DELETE employees;
 ```
 Table removal cannot be undone
-
