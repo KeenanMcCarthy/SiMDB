@@ -62,9 +62,9 @@ GET employees: * IF first_name IN (GET overdue_timesheets: *;); <br />
 
 Transactions:<br />
 Begin transaction:<br />
-TRANSACTION START:<br />
+TRANSACTION START;<br />
 End transaction:<br />
-TRANSACTION END:<br />
+TRANSACTION END:\;<br />
 Note: Only complete transactions will be backed up to disk<br />
 
 Delete a table:<br />
