@@ -17,59 +17,59 @@ The following details the querying language upon which the database operates:
 
 Create a table and schema:<br />
 CREATE tablename: column_name size, column_name size, ... ;<br />
-Ex:
-CREATE employees: employeeID 5, first_name 10, last_name 10, department 12, salary 7;
+Ex:</br>
+CREATE employees: employeeID 5, first_name 10, last_name 10, department 12, salary 7;<br />
 Note: The first element of the schema will always serve as the primary key for the table, and the
 size of the column denotes the maximum number of characters which a field in that column may have. 
 
-Add to a table:
-INSERT tablename: value1, value2, ... , valueN;
-†Ex:
-INSERT employees: 001, John, Smith, accounting, 80000;
+Add to a table:<br />
+INSERT tablename: value1, value2, ... , valueN;<br />
+Ex:<br />
+INSERT employees: 001, John, Smith, accounting, 80000;<br />
 
-Update a field:
-UPDATE tablename: Primary_key, column_name, new_value;
-Ex:
-UPDATE employees: 001, salary, 85000;
+Update a field:<br />
+UPDATE tablename: Primary_key, column_name, new_value;<br />
+Ex:<br />
+UPDATE employees: 001, salary, 85000;<br />
 
-Get an entry:
-GET tablename: Primary_key;
-Ex:
-GET employees: 001;
+Get an entry:<br />
+GET tablename: Primary_key;<br />
+Ex:<br />
+GET employees: 001;<br />
 
-Get all elements in a table:
-GET tablename: *;
-Ex:
-GET employees: *;
+Get all elements in a table:<br />
+GET tablename: *;<br />
+Ex:<br />
+GET employees: *;<br />
 
-Conditional get:
-GET tablename: * IF column_name1 = value1, = column_name2 (eq) value2;
-Ex:
-GET employees: * IF first_name = John;
-GET employees: * IF salary >= 60000, AND salary <=100000;
+Conditional get:<br />
+GET tablename: * IF column_name1 = value1, = column_name2 (eq) value2;<br />
+Ex:<br />
+GET employees: * IF first_name = John;<br />
+GET employees: * IF salary >= 60000, AND salary <=100000;<br />
 Note: equality symbols include =, <, >, >=, <=, !(!=) and supported operations
 are OR, and AND
 
-Conditional get with order of operations logic:
-GET tablename: * IF column_name1 = value1, (OP) (IF column_name2 = value2, (OP) column_name3 = value3);
-Ex:
-GET employees: * IF first_name = John, OR (IF first_name = Ann, AND salary > 90000);
+Conditional get with order of operations logic:<br />
+GET tablename: * IF column_name1 = value1, (OP) (IF column_name2 = value2, (OP) column_name3 = value3);<br />
+Ex:<br />
+GET employees: * IF first_name = John, OR (IF first_name = Ann, AND salary > 90000);<br />
 
-Get elements if in subquery:
-GET tablename1: * IF column_name1 IN (GET tablename2: *;);
-Ex:
-GET employees: * IF first_name IN (GET overdue_timesheets: *;); 
+Get elements if in subquery:<br />
+GET tablename1: * IF column_name1 IN (GET tablename2: *;);<br />
+Ex:<br />
+GET employees: * IF first_name IN (GET overdue_timesheets: *;); <br />
 
-Transactions:
-Begin transaction:
-TRANSACTION START:
-End transaction:
-TRANSACTION END:
-Note: Only complete transactions will be backed up to disk
+Transactions:<br />
+Begin transaction:<br />
+TRANSACTION START:<br />
+End transaction:<br />
+TRANSACTION END:<br />
+Note: Only complete transactions will be backed up to disk<br />
 
-Delete a table:
-DELETE tablename;
-Ex:
-DELETE employees;
+Delete a table:<br />
+DELETE tablename;<br />
+Ex:<br />
+DELETE employees;<br />
 Note: Table removal cannot be undone
 
