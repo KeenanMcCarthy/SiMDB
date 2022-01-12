@@ -15,8 +15,8 @@ an additional command-line parameter denoting the desired port. (ex. ./a.out SER
 
 The following details the querying language upon which the database operates:
 
-Create a table and schema:
-CREATE tablename: column_name size, column_name size, ... ;
+Create a table and schema:<br />
+CREATE tablename: column_name size, column_name size, ... ;<br />
 Ex:
 CREATE employees: employeeID 5, first_name 10, last_name 10, department 12, salary 7;
 Note: The first element of the schema will always serve as the primary key for the table, and the
@@ -24,7 +24,7 @@ size of the column denotes the maximum number of characters which a field in tha
 
 Add to a table:
 INSERT tablename: value1, value2, ... , valueN;
-Ex:
+†Ex:
 INSERT employees: 001, John, Smith, accounting, 80000;
 
 Update a field:
