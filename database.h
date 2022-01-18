@@ -29,10 +29,17 @@ class Database{
     string params;
     RollbackObj(Command* command, string params);
   };
+  class CurrentTableObj{
+  public:
+    Table* table;
+    vector<string> fields;
+    CurrentTableObj(Table* table);
+    CurrentTableObj(Table* table, vector<string> fields);
+  };
 public:
   Command_Facade* commander;
   unordered_map<string, Table*> tables;
-  stack<Table*> current_table;
+  stack<CurrentTableObj> current_table;
   queue<CommitJob> disk_commit_queue;
   stack<RollbackObj> rollback_stack;
   bool in_transaction;
@@ -48,6 +55,7 @@ public:
   string run_command(string command);
   void add_table(string name);
   void set_cur_table(string name);
+  void set_cur_table(string name, vector<string> fields);
   void run_server();
   void run_server(int port);
   void clear_queue();
@@ -55,6 +63,7 @@ public:
   void add_to_rollback(Command* command, string params);
   void add_to_rollback(Command* command);
   void roll_back_stack();
+  void pop_current_table();
 };
 
 #endif

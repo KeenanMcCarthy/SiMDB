@@ -2,21 +2,31 @@
 
 Condition_Command::Condition_Command(Database* db): Command(db){}
 
+bool Condition_Command::is_number(string value){
+  for (int i=0; i<value.length(); i++){
+    if (!isdigit(value[i])){
+      return false;
+    }
+  }
+  return true;
+}
+
 bool Condition_Command::evaluate(int row_ind, string field, string value, string op){
   string element = get_current_table()->table[row_ind][get_current_table()->columns[field]];
   int comp_val;
-  try {
-    int int_element = stoi(element);
-    int int_val;
-    try {
-      int_val = stoi(value);
-    } catch (exception e){
-      cout << "types incompatible " << endl;
+  if (is_number(element)){
+    if (is_number(value)){
+      comp_val = stoi(element)-stoi(value);
+    } else {
+      throw invalid_argument("Incompatible types \n");
     }
-    comp_val = int_element-int_val;
-  } catch (exception e){
-    to_uppercase(element);
-    comp_val = element.compare(value);
+  } else {
+    if (is_number(value)){
+      throw invalid_argument("Incompatible types \n");
+    } else {
+      to_uppercase(element);
+      comp_val = element.compare(value);
+    }
   }
   if (op == "=" && comp_val == 0){
     return true;
@@ -61,18 +71,31 @@ string Condition_Command::command(string command, int ind){
     field = command.substr(ind, op_start-ind);
     value = command.substr(op_end, end_ind-op_end);
     trim_whitespace(field);
+    if (get_current_table()->columns.count(field) == 0){
+      return "ERROR: INVALID FIELD \n";
+    }
     trim_whitespace(value);
     to_uppercase(value);
   }
   string response = "";
-  for (int i=0; i<get_current_table()->table.size(); i++){
-    if (!has_condition || evaluate(i, field, value, op)){
-      for (int j=0; j<get_current_table()->table[0].size(); j++){
-        response += (get_current_table()->table[i][j] + ",");
+  try {
+    for (int i=0; i<get_current_table()->table.size(); i++){
+      if (!has_condition || evaluate(i, field, value, op)){
+        if (get_current_fields().size() == 0){
+          for (int j=0; j<get_current_table()->table[0].size(); j++){
+            response += (get_current_table()->table[i][j] + ",");
+          }
+        } else {
+          for (string field: get_current_fields()){
+            response += (get_current_table()->table[i][get_current_table()->columns[field]] + ",");
+          }
+        }
+        response.pop_back();
+        response += '\n';
       }
-      response.pop_back();
-      response += '\n';
     }
+  } catch (const invalid_argument& e){
+    return e.what();
   }
   return response;
 }

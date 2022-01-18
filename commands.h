@@ -16,6 +16,7 @@ public:
   virtual string command(string command, int ind) = 0;
   virtual void rollback(string params);
   Table* get_current_table();
+  vector<string> get_current_fields();
   void to_uppercase(string& str);
   void add_command(string name, Command* command);
   void trim_whitespace_left(string& str);
@@ -46,6 +47,7 @@ public:
 class Set_Table_Command: public Command{
 public:
   Set_Table_Command(Database* db);
+  vector<string> split_str(string fields, string table_name);
   string command(string command, int ind);
   void rollback(string params);
 };
@@ -112,6 +114,7 @@ public:
 class Condition_Command: public Command{
 public:
   Condition_Command(Database* db);
+  bool is_number(string value);
   bool evaluate(int row_ind, string field, string value, string op);
   string command(string command, int ind);
 };
@@ -119,6 +122,13 @@ public:
 class In_Command: public Command{
 public:
   In_Command(Database* db);
+  string command(string command, int ind);
+};
+
+class Sum_Command: public Command{
+public:
+  Sum_Command(Database* db);
+  vector<int> split_str(string entry);
   string command(string command, int ind);
 };
 

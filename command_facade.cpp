@@ -22,11 +22,14 @@ Command_Facade::Command_Facade(Database* db){
   End_Trxn_Command* end_trxn_command = new End_Trxn_Command(db);
   Condition_Command* condition_command = new Condition_Command(db);
   In_Command* in_command = new In_Command(db);
+  Sum_Command* sum_command = new Sum_Command(db);
   insert_pk->add_command("addValue", insert);
   insert->add_command("addValue", insert);
   root->add_command("CREATE", make_table);
   root->add_command("DELETE", delete_command);
   root->add_command("UPDATE", set_table_update);
+  root->add_command("SUM", sum_command);
+  sum_command->add_command("addValue", set_table_get);
   trxn_command->add_command("START", start_trxn_command);
   trxn_command->add_command("END", end_trxn_command);
   root->add_command("TRANSACTION", trxn_command);

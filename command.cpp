@@ -9,7 +9,11 @@ Table* Command::get_current_table(){
   if (db->current_table.empty()){
     return nullptr;
   }
-  return this->db->current_table.top();
+  return db->current_table.top().table;
+}
+
+vector<string> Command::get_current_fields(){
+  return db->current_table.top().fields;
 }
 
 void Command::to_uppercase(string& str){

@@ -11,12 +11,19 @@ string Get_Command::command(string command, int ind){
     return commands["*"]->command(command, end_ind);
   }
   if (get_current_table()->rows.count(pk_name) == 0){
+    db->rollback();
     return "Entry not found\n";
   }
   vector<string> row = get_current_table()->table[get_current_table()->rows[pk_name]];
   string response = "";
-  for (string entry: row){
-    response += (entry + " ");
+  if (get_current_fields().size() == 0){
+    for (string entry: row){
+      response += (entry + " ");
+    }
+  } else {
+    for (string field: get_current_fields()){
+      response += (row[get_current_table()->columns[field]]);
+    }
   }
   response += '\n';
   return response;

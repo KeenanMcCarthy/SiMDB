@@ -4,7 +4,7 @@ using namespace std;
 
 Database::Database(){
   commander = new Command_Facade(this);
-  current_table = stack<Table*>();
+  current_table = stack<CurrentTableObj>();
   in_transaction = false;
   to_rollback = false;
   for (const auto& file: std::__fs::filesystem::directory_iterator("./tables")){
@@ -25,6 +25,15 @@ Database::CommitJob::CommitJob(Table* table, string data, string operation){
 Database::RollbackObj::RollbackObj(Command* command, string params){
   this->command = command;
   this->params = params;
+}
+
+Database::CurrentTableObj::CurrentTableObj(Table* table){
+  this->table = table;
+}
+
+Database::CurrentTableObj::CurrentTableObj(Table* table, vector<string> fields){
+  this->table = table;
+  this->fields = fields;
 }
 
 void Database::commit(){
@@ -54,7 +63,7 @@ void Database::start_commandline(){
 }
 
 void Database::submit_job_to_queue(string data, string operation){
-  disk_commit_queue.push(CommitJob(current_table.top(), data, operation));
+  disk_commit_queue.push(CommitJob(current_table.top().table, data, operation));
 }
 
 void Database::commit_queue_to_disk(){
@@ -109,14 +118,25 @@ void Database::roll_back_stack(){
   }
 }
 
+void Database::pop_current_table(){
+  if (in_transaction){
+    return;
+  }
+  current_table.pop();
+}
+
 void Database::add_table(string name){
   this->tables[name] = new Table(name);
 }
 
 void Database::set_cur_table(string name){
   if (tables.find(name) != tables.end()){
-    current_table.push(tables[name]);
-    return;
+    current_table.push(CurrentTableObj(tables[name]));
   }
-  cout << "Table does not exist" << endl;
+}
+
+void Database::set_cur_table(string name, vector<string> fields){
+  if (tables.find(name) != tables.end()){
+    current_table.push(CurrentTableObj(tables[name], fields));
+  }
 }
