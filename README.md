@@ -1,4 +1,4 @@
-### kDB
+# kDB
   This is an in memory database that uses threads running in the background to backup changes to disk. 
 In the event of a failure, the database can be recovered from the back up, thus ensuring that the data 
 recovered is as up to date as possible (barring updates lost in the backup queue at the time of failure).
@@ -13,37 +13,35 @@ If you would like to run the database in server mode, include the keyword SERVER
 parameter. The database runs on port 3490 by default, however the port may be modified by providing
 an additional command-line parameter denoting the desired port. (ex. ./a.out SERVER 8080)
 
-## The following details the querying language upon which the database operates:
+# The following details the querying language upon which the database operates:
 
-# Create a table and schema:<br />
+### Create a table and schema:<br />
 ```
 CREATE tablename: column_name size, column_name size, ... ;
 Ex: CREATE employees: employeeID 5, first_name 10, last_name 10, department 12, salary 7;
 Note: The first element of the schema will always serve as the primary key for the table, and the
 size of the column denotes the maximum number of characters which a field in that column may have. 
 ```
-#Add to a table:<br />
+### Add to a table:<br />
 ```
-INSERT tablename: value1, value2, ... , valueN;<br />
-Ex:<br />
-INSERT employees: 001, John, Smith, accounting, 80000;<br />
+INSERT tablename: value1, value2, ... , valueN;
+Ex: INSERT employees: 001, John, Smith, accounting, 80000;
 ```
+### Update a field:<br />
 ```
-#Update a field:<br />
-UPDATE tablename: Primary_key, column_name, new_value;<br />
-Ex:<br />
-UPDATE employees: 001, salary, 85000;<br />
+UPDATE tablename: Primary_key, column_name, new_value;
+EX: UPDATE employees: 001, salary, 85000;
 ```
-Get an entry:<br />
-GET tablename: Primary_key;<br />
-Ex:<br />
-GET employees: 001;<br />
-
-Get all elements in a table:<br />
-GET tablename: *;<br />
-Ex:<br />
-GET employees: *;<br />
-
+### Get an entry:<br />
+```
+GET tablename: Primary_key;
+Ex: GET employees: 001;
+```
+### Get all elements in a table:<br />
+```
+GET tablename: *;
+Ex: GET employees: *;
+```
 Get an entry by primary key:<br />
 GET tablename: Primary_key;<br />
 Ex:<br />
