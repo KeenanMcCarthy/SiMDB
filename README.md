@@ -42,6 +42,17 @@ GET tablename: *;<br />
 Ex:<br />
 GET employees: *;<br />
 
+Get an entry by primary key:<br />
+GET tablename: Primary_key;<br />
+Ex:<br />
+GET employees: 001;
+
+Get specific fields from an entry:<br />
+GET tablename.field1,field2: identifier;
+Ex:<br />
+GET employees.first_name,last_name: 001;
+GET employees.first_name: *;
+
 Conditional get:<br />
 GET tablename: * IF column_name1 = value1, = column_name2 (eq) value2;<br />
 Ex:<br />
@@ -58,7 +69,12 @@ GET employees: * IF first_name = John, OR (IF first_name = Ann, AND salary > 900
 Get elements if in subquery:<br />
 GET tablename1: * IF column_name1 IN (GET tablename2: *;);<br />
 Ex:<br />
-GET employees: * IF first_name IN (GET overdue_timesheets: *;); <br />
+GET employees: * IF first_name IN (GET overdue_timesheets.first_name: *;); <br />
+
+Sum elements of a query:<br />
+SUM tablename: * IF field1=value1;<br />
+Ex:<br />
+SUM employees.salary: * IF salary>50000;<br />
 
 Transactions:<br />
 Begin transaction:<br />
