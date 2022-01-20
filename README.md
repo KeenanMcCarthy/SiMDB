@@ -13,16 +13,17 @@ If you would like to run the database in server mode, include the keyword SERVER
 parameter. The database runs on port 3490 by default, however the port may be modified by providing
 an additional command-line parameter denoting the desired port. (ex. ./a.out SERVER 8080)
 
-The following details the querying language upon which the database operates:
+#The following details the querying language upon which the database operates:
 
-Create a table and schema:<br />
-CREATE tablename: column_name size, column_name size, ... ;<br />
-Ex:</br>
-CREATE employees: employeeID 5, first_name 10, last_name 10, department 12, salary 7;<br />
+#Create a table and schema:<br />
+```
+CREATE tablename: column_name size, column_name size, ... ;
+Ex: CREATE employees: employeeID 5, first_name 10, last_name 10, department 12, salary 7;
 Note: The first element of the schema will always serve as the primary key for the table, and the
 size of the column denotes the maximum number of characters which a field in that column may have. 
 ```
 #Add to a table:<br />
+```
 INSERT tablename: value1, value2, ... , valueN;<br />
 Ex:<br />
 INSERT employees: 001, John, Smith, accounting, 80000;<br />
