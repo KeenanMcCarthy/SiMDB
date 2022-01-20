@@ -21,17 +21,18 @@ Ex:</br>
 CREATE employees: employeeID 5, first_name 10, last_name 10, department 12, salary 7;<br />
 Note: The first element of the schema will always serve as the primary key for the table, and the
 size of the column denotes the maximum number of characters which a field in that column may have. 
-
-Add to a table:<br />
+```
+#Add to a table:<br />
 INSERT tablename: value1, value2, ... , valueN;<br />
 Ex:<br />
 INSERT employees: 001, John, Smith, accounting, 80000;<br />
-
-Update a field:<br />
+```
+```
+#Update a field:<br />
 UPDATE tablename: Primary_key, column_name, new_value;<br />
 Ex:<br />
 UPDATE employees: 001, salary, 85000;<br />
-
+```
 Get an entry:<br />
 GET tablename: Primary_key;<br />
 Ex:<br />
