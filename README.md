@@ -33,11 +33,6 @@ Ex: INSERT employees: 001, John, Smith, accounting, 80000;
 UPDATE tablename: Primary_key, column_name, new_value;
 EX: UPDATE employees: 001, salary, 85000;
 ```
-### Get an entry:<br />
-```
-GET tablename: Primary_key;
-Ex: GET employees: 001;
-```
 ### Get all elements in a table:<br />
 ```
 GET tablename: *;
