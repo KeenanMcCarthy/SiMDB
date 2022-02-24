@@ -51,7 +51,7 @@ Ex: GET employees.first_name: *;
 ```
 ### Conditional get:<br />
 ```
-GET tablename: * IF column_name1 = value1, = column_name2 (eq) value2;
+GET tablename: * IF column_name1 = value1, OR column_name2 = value2;
 Ex: GET employees: * IF first_name = John;
 GET employees: * IF salary >= 60000, AND salary <=100000;
 ```
