@@ -60,7 +60,7 @@ are OR, and AND
 
 ### Conditional get with order of operations logic:<br />
 ```
-GET tablename: * IF column_name1 = value1, (OP) (IF column_name2 = value2, (OP) column_name3 = value3);
+GET tablename: * IF column_name1 = value1, OR (IF column_name2 = value2, AND column_name3 = value3);
 Ex: GET employees: * IF first_name = John, OR (IF first_name = Ann, AND salary > 90000);
 ```
 ### Get elements if in subquery:<br />
