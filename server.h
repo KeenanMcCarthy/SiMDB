@@ -12,6 +12,9 @@
 #include<netinet/in.h>
 #include<unistd.h>
 #include"database.h"
+#include"request_obj.h"
+
+#define BUFFER_SIZE 1024
 
 using namespace std;
 

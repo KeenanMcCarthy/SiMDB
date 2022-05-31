@@ -8,7 +8,7 @@ CPPFLAGS = -std=c++11 -Wall -c -g
 OBJ = database.o command_facade.o table.o server.o command.o insert_PK_Command.o\
 make_table_command.o create_command.o set_table_command.o insert_command.o\
 get_command.o get_all_command.o delete_command.o update_command.o sum_command.o\
-transaction_commands.o condition_command.o in_command.o main.o
+transaction_commands.o condition_command.o in_command.o request_obj.o main.o
 
 output: $(OBJ)
 	$(CC) $(OBJ)
@@ -66,6 +66,9 @@ in_command.o: commands.h in_command.cpp
 
 sum_command.o: commands.h sum_command.cpp
 	$(CC) $(CPPFLAGS) sum_command.cpp
+
+request_obj.o: request_obj.h request_obj.cpp
+	$(CC) $(CPPFLAGS) request_obj.cpp
 
 main.o: main.cpp
 	$(CC) $(CPPFLAGS) main.cpp

@@ -33,17 +33,18 @@ void Server::run_server(int port){
       perror("new socket failed");
       exit(1);
     }
-    char buffer[1024] = {0};
+    char buffer[BUFFER_SIZE] = {0};
     int valread;
-    if ((valread = read(new_socket, buffer, 1024))<0){
+    if ((valread = read(new_socket, buffer, BUFFER_SIZE))<0){
       perror("valread err");
       exit(1);
     };
-    string input = "";
-    for (int i=146; i<1024; i++){
-      input += buffer[i];
+    Request_Obj request_obj = Request_Obj(buffer, BUFFER_SIZE);
+    /*for (int i=0; i<BUFFER_SIZE; i++){
+      cout << buffer[i];
     }
-    string ret = db->run_command(input);
+    cout << endl;*/
+    string ret = request_obj.query_database(this->db);
     send(new_socket, ret.c_str(), ret.length(), 0);
     close(new_socket);
   }
