@@ -8,7 +8,8 @@ CPPFLAGS = -std=c++11 -Wall -c -g
 OBJ = database.o command_facade.o table.o server.o command.o insert_PK_Command.o\
 make_table_command.o create_command.o set_table_command.o insert_command.o\
 get_command.o get_all_command.o delete_command.o update_command.o sum_command.o\
-transaction_commands.o condition_command.o in_command.o request_obj.o main.o
+transaction_commands.o condition_command.o in_command.o request_obj.o main.o\
+json_elements.o json_list.o json_value.o json_object.o
 
 output: $(OBJ)
 	$(CC) $(OBJ)
@@ -69,6 +70,18 @@ sum_command.o: commands.h sum_command.cpp
 
 request_obj.o: request_obj.h request_obj.cpp
 	$(CC) $(CPPFLAGS) request_obj.cpp
+
+json_elements.o: JSON_elements.h JSON_elements.cpp
+	$(CC) $(CPPFLAGS) JSON_elements.cpp
+
+json_list.o: JSON_elements.h JSON_list.cpp
+	$(CC) $(CPPFLAGS) JSON_list.cpp
+
+json_object.o: JSON_elements.h JSON_object.cpp
+	$(CC) $(CPPFLAGS) JSON_object.cpp
+
+json_value.o: JSON_elements.h JSON_value.cpp
+	$(CC) $(CPPFLAGS) JSON_value.cpp
 
 main.o: main.cpp
 	$(CC) $(CPPFLAGS) main.cpp

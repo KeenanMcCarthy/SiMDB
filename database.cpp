@@ -79,13 +79,13 @@ string Database::run_command(string command){
 }
 
 void Database::run_server(int port){
-  cout << ("KDB is running on port " + to_string(port)) << endl;
+  cout << ("SiMDB is running on port " + to_string(port)) << endl;
   Server s = Server(this);
   s.run_server(port);
 }
 
 void Database::run_server(){
-  cout << "KDB is running on port 3490" << endl;
+  cout << "SiMDB is running on port 3490" << endl;
   Server s = Server(this);
   s.run_server();
 }

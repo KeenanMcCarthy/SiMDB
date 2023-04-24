@@ -13,9 +13,11 @@ private:
   void parse_header(string header);
   enum http_reqest_type { POST, GET, PUSH, DELETE, PUT};
 public:
+  ~Request_Obj(){};
   http_reqest_type http_type;
   string path;
   string http_version;
+  int content_length;
   unordered_map<string, string> headers;
 
   string query;

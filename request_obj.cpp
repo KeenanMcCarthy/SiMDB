@@ -1,4 +1,5 @@
 #include"request_obj.h"
+#include"JSON_elements.h"
 
 void Request_Obj::parse_header(string header) {
   int start_ind = header.find_first_not_of(' ');
@@ -31,12 +32,8 @@ Request_Obj::Request_Obj(char buffer [], int buffer_size){
   if (this->http_type == POST) {
     i += 2;
     string data = "";
-    cout <<"bufferi " << buffer[i] << endl;
-    if (buffer[i] == '{'){
-      ++i;
-      for (; buffer[i]!='}'; i++){
+    for (; i<buffer_size && buffer[i] != '\0'; i++){
         data += buffer[i];
-      }
     }
     this->query = data;
   }
