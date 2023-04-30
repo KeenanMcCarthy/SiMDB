@@ -1,5 +1,5 @@
 # SiMDB
-  This is an in memory database that uses threads running in the background to backup changes to disk.
+  This is an in memory database that uses a thread pool running in the background to backup changes to disk.
 In the event of a failure, the database can be recovered from the back up, thus ensuring that the data
 recovered is as up to date as possible (barring updates lost in the backup queue at the time of failure).
 Therefore, end users can benefit from the speed of an in-memory database, and enjoy a significant degree
