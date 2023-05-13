@@ -12,6 +12,9 @@ void Request_Obj::parse_header(string header) {
 }
 
 Request_Obj::Request_Obj(char buffer [], int buffer_size){
+  for (int i=0; i<buffer_size; i++) {
+    cout << buffer[i];
+  }
   string start_line = "";
   int i;
   for (i=0; buffer[i]!='\r' && buffer[i+1]!='\n'; i++){
@@ -69,6 +72,21 @@ void Request_Obj::parse_start_line(string start_line){
 }
 
 string Request_Obj::query_database(Database* db){
-  cout << "QUERY : " << this->query << endl;
-  return db->run_command(this->query);
+  string to_query = this->query;
+  if (headers["Content-Type"] == "application/json") {
+    JSON_object* jo = new JSON_object(this->query);
+    to_query = jo->get_element("query")->stringify();
+  }
+  string response = db->run_command(to_query);
+  if (headers["Accept"] == "application/json") {
+    JSON_object* json_response = new JSON_object();
+    JSON_value* query_val = new JSON_value();
+    query_val->set_value(to_query);
+    JSON_value* response_val = new JSON_value();
+    response_val->set_value(response);
+    json_response->add_element("query", query_val);
+    json_response->add_element("response", response_val);
+    return json_response->stringify();
+  }
+  return response;
 }

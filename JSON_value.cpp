@@ -19,5 +19,6 @@ string JSON_value::stringify(){
 }
 
 void JSON_value::set_value(string contents) {
+  trim_whitespace(contents);
   this->contents = contents;
 }
