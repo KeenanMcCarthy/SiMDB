@@ -12,9 +12,6 @@ void Request_Obj::parse_header(string header) {
 }
 
 Request_Obj::Request_Obj(char buffer [], int buffer_size){
-  for (int i=0; i<buffer_size; i++) {
-    cout << buffer[i];
-  }
   string start_line = "";
   int i;
   for (i=0; buffer[i]!='\r' && buffer[i+1]!='\n'; i++){
@@ -72,6 +69,9 @@ void Request_Obj::parse_start_line(string start_line){
 }
 
 string Request_Obj::query_database(Database* db){
+  if (this->path != "/SiMDB") {
+    return "Http error 404: Invalid endpoint";
+  }
   string to_query = this->query;
   if (headers["Content-Type"] == "application/json") {
     JSON_object* jo = new JSON_object(this->query);
