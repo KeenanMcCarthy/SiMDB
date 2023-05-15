@@ -28,7 +28,7 @@ string Create_Command::command(string command, int ind){
     db->commit();
     return "Table Created\n";
   }
-  return "Error";
+  return "ERORR: error occured";
 }
 
 void Create_Command::rollback(string params){

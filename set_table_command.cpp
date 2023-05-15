@@ -42,7 +42,7 @@ string Set_Table_Command::command(string command, int ind){
   }
   trim_whitespace(table_name);
   if (db->tables.find(table_name) == db->tables.end()){
-    return "Table does not exist\n";
+    return "ERROR: Table does not exist\n";
   }
   if (get_current_table() != nullptr){
     db->add_to_rollback(this, get_current_table()->name);

@@ -19,10 +19,12 @@ public:
   string http_version;
   int content_length;
   unordered_map<string, string> headers;
+  unordered_map<string, string> response_headers;
 
   string query;
 
   Request_Obj(char buffer [], int buffer_size);
+  void add_response_code(string response);
   string query_database(Database* db);
 };
 

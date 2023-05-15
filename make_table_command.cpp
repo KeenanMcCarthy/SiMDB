@@ -21,6 +21,6 @@ void Make_Table_Command::rollback(string params){
   try {
     std::__fs::filesystem::remove("tables/"+params+".txt");
   } catch (const std::__fs::filesystem::filesystem_error& err){
-    cout << "filesystem error\n" << endl;
+    cout << "ERROR: filesystem error\n" << endl;
   }
 }

@@ -84,7 +84,7 @@ string Get_All_Command::command(string command, int ind){
       response_set = new_set;
       response = new_response;
     } else {
-      return "INVALID QUERY\n";
+      return "ERROR: INVALID QUERY\n";
     }
     int end_ind = command.find_first_of(";,()", ind);
     if (command[end_ind] == ')'){

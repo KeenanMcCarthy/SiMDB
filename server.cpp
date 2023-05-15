@@ -40,12 +40,17 @@ void Server::run_server(int port){
       exit(1);
     };
     Request_Obj request_obj = Request_Obj(buffer, BUFFER_SIZE);
-    /*for (int i=0; i<BUFFER_SIZE; i++){
-      cout << buffer[i];
-    }
-    cout << endl;*/
+    string response = "";
     string ret = request_obj.query_database(this->db);
-    send(new_socket, ret.c_str(), ret.length(), 0);
+    unordered_map<string, string>::iterator itr;
+    for (itr=request_obj.response_headers.begin();
+        itr!=request_obj.response_headers.end(); ++itr) {
+      response += itr->first;
+      response += itr->second;
+      response += "\r\n\r\n";
+    }
+    response += ret;
+    send(new_socket, response.c_str(), response.length(), 0);
     close(new_socket);
   }
 }

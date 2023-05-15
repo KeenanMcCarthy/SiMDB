@@ -5,9 +5,11 @@ void Request_Obj::parse_header(string header) {
   int start_ind = header.find_first_not_of(' ');
   int end_ind = header.find_first_of(':');
   string header_key = header.substr(start_ind, end_ind - start_ind);
+  header_key.erase(header_key.find_last_not_of(" \n\r\t")+1);
   start_ind = header.find_first_not_of(' ', end_ind+1);
   end_ind = header.find_first_of(" \r\n", start_ind);
   string header_val = header.substr(start_ind, end_ind - start_ind);
+  header_val.erase(header_val.find_last_not_of(" \n\r\t")+1);
   this->headers[header_key] = header_val;
 }
 
@@ -68,6 +70,20 @@ void Request_Obj::parse_start_line(string start_line){
   this->http_version = start_line.substr(start_ind, end_ind - start_ind);
 }
 
+void Request_Obj::add_response_code(string response) {
+  int colon_ind = response.find_first_of(':');
+  if (colon_ind != -1){
+    string response_start = response.substr(0, colon_ind);
+    response_start.erase(response_start.begin(), response_start.begin()+response_start.find_first_not_of(" \n\r\t"));
+    response_start.erase(response_start.find_last_not_of(" \n\r\t")+1);
+    if (response_start == "ERROR") {
+      response_headers["400"] = response.substr(colon_ind+1, response.size());
+      return;
+    }
+  }
+  response_headers["200"] = " OK";
+}
+
 string Request_Obj::query_database(Database* db){
   if (this->path != "/SiMDB") {
     return "Http error 404: Invalid endpoint";
@@ -79,6 +95,7 @@ string Request_Obj::query_database(Database* db){
   }
   string response = db->run_command(to_query);
   if (headers["Accept"] == "application/json") {
+    add_response_code(response);
     JSON_object* json_response = new JSON_object();
     JSON_value* query_val = new JSON_value();
     query_val->set_value(to_query);
