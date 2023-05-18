@@ -3,6 +3,7 @@
 
 #include<iostream>
 #include<string>
+#include<sstream>
 #include<unordered_map>
 #include<queue>
 #include<stack>
@@ -12,6 +13,7 @@
 #include"commands.h"
 #include"table.h"
 #include"server.h"
+#include"JSON_elements.h"
 
 using namespace std;
 
@@ -42,11 +44,12 @@ public:
   stack<CurrentTableObj> current_table;
   queue<CommitJob> disk_commit_queue;
   stack<RollbackObj> rollback_stack;
+  JSON_object* config;
   bool in_transaction;
   bool to_rollback;
 
   Database();
-
+  void parse_config();
   void commit();
   void rollback();
   void start_commandline();

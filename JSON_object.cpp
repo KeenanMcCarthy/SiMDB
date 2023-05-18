@@ -28,6 +28,7 @@ JSON_object::JSON_object(string& JSON_string) {
       if (js_val->contents != ""){
         contents[key] = js_val;
       }
+      trim_whitespace_left(JSON_string);
       JSON_string.erase(0, 1);
     }
     if (element_end_delimiter == '[') {

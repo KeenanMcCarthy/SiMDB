@@ -85,8 +85,8 @@ void Request_Obj::add_response_code(string response) {
 }
 
 string Request_Obj::query_database(Database* db){
-  if (this->path != "/SiMDB") {
-    return "Http error 404: Invalid endpoint";
+  if (this->path != "/" +db->config->get_element("ContextRoot")->stringify()) {
+    return "ERROR: Invalid endpoint";
   }
   string to_query = this->query;
   if (headers["Content-Type"] == "application/json") {

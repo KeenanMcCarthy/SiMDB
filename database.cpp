@@ -3,6 +3,7 @@
 using namespace std;
 
 Database::Database(){
+  parse_config();
   commander = new Command_Facade(this);
   current_table = stack<CurrentTableObj>();
   in_transaction = false;
@@ -34,6 +35,14 @@ Database::CurrentTableObj::CurrentTableObj(Table* table){
 Database::CurrentTableObj::CurrentTableObj(Table* table, vector<string> fields){
   this->table = table;
   this->fields = fields;
+}
+
+void Database::parse_config() {
+  std::ifstream t("config.json");
+  std::stringstream buffer;
+  buffer << t.rdbuf();
+  string buffer_str = buffer.str();
+  this->config = new JSON_object(buffer_str);
 }
 
 void Database::commit(){
@@ -85,7 +94,7 @@ void Database::run_server(int port){
 }
 
 void Database::run_server(){
-  cout << "SiMDB is running on port 3490" << endl;
+  cout << "SiMDB is running on port " << config->get_element("Port")->stringify() << endl;
   Server s = Server(this);
   s.run_server();
 }
