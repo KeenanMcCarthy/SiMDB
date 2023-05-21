@@ -9,7 +9,7 @@ OBJ = database.o command_facade.o table.o server.o command.o insert_PK_Command.o
 make_table_command.o create_command.o set_table_command.o insert_command.o\
 get_command.o get_all_command.o delete_command.o update_command.o sum_command.o\
 transaction_commands.o condition_command.o in_command.o request_obj.o main.o\
-json_elements.o json_list.o json_value.o json_object.o
+json_elements.o json_list.o json_value.o json_object.o config_singleton.o
 
 output: $(OBJ)
 	$(CC) $(OBJ)
@@ -82,6 +82,9 @@ json_object.o: JSON_elements.h JSON_object.cpp
 
 json_value.o: JSON_elements.h JSON_value.cpp
 	$(CC) $(CPPFLAGS) JSON_value.cpp
+
+config_singleton.o: config_singleton.h config_singleton.cpp
+	$(CC) $(CPPFLAGS) config_singleton.cpp
 
 main.o: main.cpp
 	$(CC) $(CPPFLAGS) main.cpp

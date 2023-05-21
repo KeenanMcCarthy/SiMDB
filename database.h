@@ -14,6 +14,7 @@
 #include"table.h"
 #include"server.h"
 #include"JSON_elements.h"
+#include"config_singleton.h"
 
 using namespace std;
 

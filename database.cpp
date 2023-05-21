@@ -38,11 +38,7 @@ Database::CurrentTableObj::CurrentTableObj(Table* table, vector<string> fields){
 }
 
 void Database::parse_config() {
-  std::ifstream t("config.json");
-  std::stringstream buffer;
-  buffer << t.rdbuf();
-  string buffer_str = buffer.str();
-  this->config = new JSON_object(buffer_str);
+  this->config = Config_Singleton::get_instance()->get_config_values();
 }
 
 void Database::commit(){
