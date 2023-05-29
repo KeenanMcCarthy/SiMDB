@@ -20,7 +20,7 @@ string Update_Command::command(string command, int ind){
   db->submit_job_to_queue(value, "UPDATE "+to_string(row_ind)+" "+to_string(col_ind));
   db->commit_queue_to_disk();
   db->clear_stack();
-  return "Value updated\n";
+  return "Value updated successfully\n";
 }
 
 void Update_Command::rollback(string params){
