@@ -59,6 +59,7 @@ void Database::rollback(){
 }
 
 void Database::start_commandline(){
+  cout << "SiMDB is running in interactive mode" << endl;
   string input;
   getline(cin, input);
   while (input.compare("done") != 0){

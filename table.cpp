@@ -47,12 +47,13 @@ void Table::add_column(string name, int size){
 
 void Table::submit_to_job_queue(string data, string operation){
   to_write.push(WriteJob(data, operation));
-  if (running_threads < stoi(config->get_element("ThreadPoolSize")->stringify())){
+  string pool_size = Config_Singleton::get_instance()->get_config_values()->get_element("ThreadPoolSize")->stringify();
+  if (running_threads < stoi(pool_size)){
     thread disk_thread ([this](){
       run_thread();
     });
     disk_thread.detach();
-    running_threads ++;
+    running_threads --;
   }
 }
 
@@ -77,7 +78,7 @@ void Table::run_thread(){
     to_write.pop();
     run_job(job);
   }
-  disk_thread_running = false;
+  running_threads ++;
 }
 
 void Table::load_table(string path){
