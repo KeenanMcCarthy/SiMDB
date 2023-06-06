@@ -11,7 +11,7 @@ using namespace std;
 
 Table::Table(string name){
   this->name = name;
-  disk_thread_running = false;
+  running_threads = 0;
   schema_size = 0;
   row_size = 0;
   num_rows = 0;
@@ -21,7 +21,7 @@ Table::Table(string name){
 
 Table::Table(string name, string path){
   this->name = name;
-  disk_thread_running = false;
+  running_threads = 0;
   schema_size = 0;
   row_size = 0;
   num_rows = 0;
@@ -47,12 +47,12 @@ void Table::add_column(string name, int size){
 
 void Table::submit_to_job_queue(string data, string operation){
   to_write.push(WriteJob(data, operation));
-  if (!disk_thread_running){
+  if (running_threads < stoi(config->get_element("ThreadPoolSize")->stringify())){
     thread disk_thread ([this](){
       run_thread();
     });
     disk_thread.detach();
-    disk_thread_running = true;
+    running_threads ++;
   }
 }
 

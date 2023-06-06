@@ -1,4 +1,5 @@
 {
   ContextRoot : "SiMDB",
-  Port : "3490"
+  Port : "3490",
+  ThreadPoolSize : 3
 }

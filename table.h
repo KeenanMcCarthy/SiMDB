@@ -32,7 +32,7 @@ public:
   unsigned int schema_size;
   unsigned int row_size;
   unsigned int num_rows;
-  bool disk_thread_running;
+  int running_threads;
 
   vector<vector<string>> table;
   vector<SchemaObj> schema;
