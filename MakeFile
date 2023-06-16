@@ -12,7 +12,7 @@ transaction_commands.o condition_command.o in_command.o request_obj.o main.o\
 json_elements.o json_list.o json_value.o json_object.o config_singleton.o
 
 output: $(OBJ)
-	$(CC) $(OBJ)
+	$(CC) -o SiMDB.exe $(OBJ)
 
 database.o: database.h database.cpp
 	$(CC) $(CPPFLAGS) database.cpp

@@ -8,10 +8,10 @@ of persistence and recoverablility.
   In order to run the database first build the executable with the following command:
 make -f Makefile
 
-  To run the database in interactive mode, run the executable without any command-line parameters.
+  To run the database in interactive mode, run the executable without any command-line parameters (./SimDB.exe).
 If you would like to run the database in server mode, include the keyword SERVER as the first
-parameter. The database runs on port 3490 by default, however the port may be modified by providing
-an additional command-line parameter denoting the desired port. (ex. ./a.out SERVER 8080)
+parameter. The default port is defined in the config.json file, however the devault port may be overriden 
+by providing an additional command-line parameter denoting the desired port. (ex. ./SiMDB.exe SERVER 8080)
 
 ## The following details the querying language upon which the database operates:
 
