@@ -46,6 +46,7 @@ public:
   JSON_object(string& JSON_object);
   void add_element(string key, JSON_element* element);
   JSON_element* get_element(string key);
+  void remove_quotes(string& str);
 };
 
 #endif

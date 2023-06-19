@@ -20,6 +20,7 @@ JSON_object::JSON_object(string& JSON_string) {
     key_end_ind = JSON_string.find_first_of(":");
     string key = string(JSON_string.begin(), JSON_string.begin()+key_end_ind);
     trim_whitespace(key);
+    remove_quotes(key);
     JSON_string.erase(0, key_end_ind+1);
     element_end_ind = JSON_string.find_first_of("\",[]]{}");
     int element_end_delimiter = JSON_string[element_end_ind];
@@ -73,4 +74,9 @@ void JSON_object::add_element(string key, JSON_element* element) {
 
 JSON_element* JSON_object::get_element(string key) {
   return contents[key];
+}
+
+void JSON_object::remove_quotes(string& str) {
+  str.erase(str.begin(), str.begin()+str.find_first_not_of('\"'));
+  str.erase(str.find_last_not_of('\"')+1);
 }
