@@ -13,6 +13,30 @@ void Request_Obj::parse_header(string header) {
   this->headers[header_key] = header_val;
 }
 
+void Request_Obj::parse_query(string path) {
+  int delimiter_ind = path.find_first_of("?");
+  if (delimiter_ind == string::npos) {
+    this->path = path;
+    return;
+  }
+  this->path = path.substr(0, delimiter_ind);
+  while (delimiter_ind < path.length()) {
+    int end_ind = path.find_first_of("&", delimiter_ind);
+    if (end_ind == string::npos) {
+      end_ind = path.length();
+    }
+    string parameter = path.substr(delimiter_ind+1, end_ind - (delimiter_ind+1));
+    int equals_ind = parameter.find_first_of("=");
+    if (equals_ind == string::npos) {
+      throw invalid_argument("Invalid URL parameter \n");
+    }
+    string param_key = parameter.substr(0, equals_ind);
+    string param_value = parameter.substr(equals_ind+1, parameter.length()-(equals_ind+1));
+    this->url_parameters[param_key] = param_value;
+    delimiter_ind = end_ind;
+  }
+}
+
 Request_Obj::Request_Obj(char buffer [], int buffer_size){
   string start_line = "";
   int i;
@@ -45,7 +69,8 @@ void Request_Obj::parse_start_line(string start_line){
   int start_ind = start_line.find_first_not_of(' ');
   int end_ind = start_line.find_first_of(' ', start_ind);
   string request_type_str = start_line.substr(start_ind, end_ind - start_ind);
-
+  cout << "start Line: " << start_line << endl;
+  cout << "REQUEST TYPE: " << request_type_str << endl;
   if (request_type_str == "POST"){
     this->http_type = POST;
   } else if (request_type_str == "GET"){
@@ -54,7 +79,7 @@ void Request_Obj::parse_start_line(string start_line){
     this->http_type = PUSH;
   } else if (request_type_str == "DELETE"){
     this->http_type = DELETE;
-  } else if (request_type_str == "POST"){
+  } else if (request_type_str == "PUT"){
     this->http_type = PUT;
   } else {
     cout << "INVALID HTTP REQUEST TYPE" << endl;
@@ -62,7 +87,8 @@ void Request_Obj::parse_start_line(string start_line){
   start_ind = start_line.find_first_not_of(' ', end_ind);
   end_ind = start_line.find_first_of(' ', start_ind);
 
-  this->path = start_line.substr(start_ind, end_ind - start_ind);
+  string requestMapping = start_line.substr(start_ind, end_ind - start_ind);
+  parse_query(requestMapping);
 
   start_ind = start_line.find_first_not_of(' ', end_ind);
   end_ind = start_line.find_first_of(" \r\n", start_ind);
@@ -92,7 +118,7 @@ string Request_Obj::query_database(Database* db){
   if (headers["Content-Type"] == "application/json") {
     JSON_object* jo = new JSON_object(this->query);
     to_query = jo->get_element("query")->stringify();
-  }
+  } 
   string response = db->run_command(to_query);
   if (headers["Accept"] == "application/json") {
     add_response_code(response);
