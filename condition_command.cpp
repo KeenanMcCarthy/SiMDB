@@ -18,11 +18,11 @@ bool Condition_Command::evaluate(int row_ind, string field, string value, string
     if (is_number(value)){
       comp_val = stoi(element)-stoi(value);
     } else {
-      throw invalid_argument("Incompatible types \n");
+      throw invalid_argument("ERROR: Incompatible types \n");
     }
   } else {
     if (is_number(value)){
-      throw invalid_argument("Incompatible types \n");
+      throw invalid_argument("ERROR: Incompatible types \n");
     } else {
       to_uppercase(element);
       comp_val = element.compare(value);
@@ -60,7 +60,7 @@ string Condition_Command::command(string command, int ind){
   if (command[command.find_first_not_of(' ', ind)] == ';'){
     has_condition = false;
   } else if (op_end == string::npos || op_end > end_ind){
-    return "NOT VALID INPUT\n";
+    return "ERROR: NOT VALID INPUT\n";
   }
   if (has_condition){
     if ((command[op_start] == '>' || command[op_start] == '<' || command[op_start] == '!')
