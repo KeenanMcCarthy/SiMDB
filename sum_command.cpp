@@ -31,7 +31,7 @@ string Sum_Command::command(string command, int ind){
     try {
       entry_val = split_str(entry);
     } catch (exception& e){
-      return "Invalid SUM arguments \n";
+      return "ERROR: Invalid SUM arguments \n";
     }
     for (int i=0; i<entry_val.size(); i++){
       if (sums.size() <= i){
