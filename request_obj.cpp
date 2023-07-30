@@ -69,8 +69,6 @@ void Request_Obj::parse_start_line(string start_line){
   int start_ind = start_line.find_first_not_of(' ');
   int end_ind = start_line.find_first_of(' ', start_ind);
   string request_type_str = start_line.substr(start_ind, end_ind - start_ind);
-  cout << "start Line: " << start_line << endl;
-  cout << "REQUEST TYPE: " << request_type_str << endl;
   if (request_type_str == "POST"){
     this->http_type = POST;
   } else if (request_type_str == "GET"){
