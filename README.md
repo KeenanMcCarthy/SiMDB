@@ -10,7 +10,7 @@ make -f Makefile
 
   To run the database in interactive mode, run the executable without any command-line parameters (./SiMDB.exe).
 If you would like to run the database in server mode, include the keyword SERVER as the first
-parameter. The default port is defined in the config.json file, however the devault port may be overriden 
+parameter. The default port is defined in the config.json file, however the default port may be overriden 
 by providing an additional command-line parameter denoting the desired port. (ex. ./SiMDB.exe SERVER 8080)
 
 ## The following details the querying language upon which the database operates:
