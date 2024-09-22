@@ -1,2 +1,0 @@
-firstname 10,lastname 10,iphoneversion 2;
-John      McC       16
