@@ -1,8 +1,14 @@
 #Compiler
 CC = clang++
 
+#Subdirectories
+DE = databaseEngine
+HS = httpServer
+JS = jsonImplementation
+CP = configPackage
+
 #Compiler flags
-CPPFLAGS = -std=c++11 -Wall -c -g
+CPPFLAGS = -std=c++11 -Wall -c -g -I$(HS) -I$(DE) -I$(JS) -I$(CP)
 
 #Object files
 OBJ = database.o command_facade.o table.o server.o command.o insert_PK_Command.o\
@@ -14,80 +20,80 @@ json_elements.o json_list.o json_value.o json_object.o config_singleton.o
 output: $(OBJ)
 	$(CC) -o SiMDB.exe $(OBJ)
 
-database.o: database.h database.cpp
-	$(CC) $(CPPFLAGS) database.cpp
+database.o: $(DE)/database.h $(DE)/database.cpp 
+	$(CC) $(CPPFLAGS) $(DE)/database.cpp
 
-table.o: table.h table.cpp
-	$(CC) $(CPPFLAGS) table.cpp
+table.o: $(DE)/table.h $(DE)/table.cpp
+	$(CC) $(CPPFLAGS) $(DE)/table.cpp
 
-server.o: server.h server.cpp
-	$(CC) $(CPPFLAGS) server.cpp
+server.o: $(HS)/server.h $(HS)/server.cpp
+	$(CC) $(CPPFLAGS) $(HS)/server.cpp
 
-command.o: commands.h command.cpp
-	$(CC) $(CPPFLAGS) command.cpp
+command.o: $(DE)/commands.h $(DE)/command.cpp
+	$(CC) $(CPPFLAGS) $(DE)/command.cpp
 
-make_table_command.o: commands.h make_table_command.cpp
-	$(CC) $(CPPFLAGS) make_table_command.cpp
+make_table_command.o: $(DE)/commands.h $(DE)/make_table_command.cpp
+	$(CC) $(CPPFLAGS) $(DE)/make_table_command.cpp
 
-create_command.o: commands.h create_command.cpp
-	$(CC) $(CPPFLAGS) create_command.cpp
+create_command.o: $(DE)/commands.h $(DE)/create_command.cpp
+	$(CC) $(CPPFLAGS) $(DE)/create_command.cpp
 
-set_table_command.o: commands.h set_table_command.cpp
-	$(CC) $(CPPFLAGS) set_table_command.cpp
+set_table_command.o: $(DE)/commands.h $(DE)/set_table_command.cpp
+	$(CC) $(CPPFLAGS) $(DE)/set_table_command.cpp
 
-insert_PK_Command.o: commands.h insert_PK_command.cpp
-	$(CC) $(CPPFLAGS) insert_PK_command.cpp
+insert_PK_Command.o: $(DE)/commands.h $(DE)/insert_PK_command.cpp
+	$(CC) $(CPPFLAGS) $(DE)/insert_PK_command.cpp
 
-insert_command.o: commands.h insert_command.cpp
-	$(CC) $(CPPFLAGS) insert_command.cpp
+insert_command.o: $(DE)/commands.h $(DE)/insert_command.cpp
+	$(CC) $(CPPFLAGS) $(DE)/insert_command.cpp
 
-command_facade.o: command_facade.h command_facade.cpp
-	$(CC) $(CPPFLAGS) command_facade.cpp
+command_facade.o: $(DE)/command_facade.h $(DE)/command_facade.cpp
+	$(CC) $(CPPFLAGS) $(DE)/command_facade.cpp
 
-get_command.o: commands.h get_command.cpp
-	$(CC) $(CPPFLAGS) get_command.cpp
+get_command.o: $(DE)/commands.h $(DE)/get_command.cpp
+	$(CC) $(CPPFLAGS) $(DE)/get_command.cpp
 
-get_all_command.o: commands.h get_all_command.cpp
-	$(CC) $(CPPFLAGS) get_all_command.cpp
+get_all_command.o: $(DE)/commands.h $(DE)/get_all_command.cpp
+	$(CC) $(CPPFLAGS) $(DE)/get_all_command.cpp
 
-delete_command.o: commands.h delete_command.cpp
-	$(CC) $(CPPFLAGS) delete_command.cpp
+delete_command.o: $(DE)/commands.h $(DE)/delete_command.cpp
+	$(CC) $(CPPFLAGS) $(DE)/delete_command.cpp
 
-update_command.o: commands.h update_command.cpp
-	$(CC) $(CPPFLAGS) update_command.cpp
+update_command.o: $(DE)/commands.h $(DE)/update_command.cpp
+	$(CC) $(CPPFLAGS) $(DE)/update_command.cpp
 
-transaction_commands.o: commands.h transaction_commands.cpp
-	$(CC) $(CPPFLAGS) transaction_commands.cpp
+transaction_commands.o: $(DE)/commands.h $(DE)/transaction_commands.cpp
+	$(CC) $(CPPFLAGS) $(DE)/transaction_commands.cpp
 
-condition_command.o: commands.h condition_command.cpp
-	$(CC) $(CPPFLAGS) condition_command.cpp
+condition_command.o: $(DE)/commands.h $(DE)/condition_command.cpp
+	$(CC) $(CPPFLAGS) $(DE)/condition_command.cpp
 
-in_command.o: commands.h in_command.cpp
-	$(CC) $(CPPFLAGS) in_command.cpp
+in_command.o: $(DE)/commands.h $(DE)/in_command.cpp
+	$(CC) $(CPPFLAGS) $(DE)/in_command.cpp
 
-sum_command.o: commands.h sum_command.cpp
-	$(CC) $(CPPFLAGS) sum_command.cpp
+sum_command.o: $(DE)/commands.h $(DE)/sum_command.cpp
+	$(CC) $(CPPFLAGS) $(DE)/sum_command.cpp
 
-request_obj.o: request_obj.h request_obj.cpp
-	$(CC) $(CPPFLAGS) request_obj.cpp
+request_obj.o: $(HS)/request_obj.h $(HS)/request_obj.cpp
+	$(CC) $(CPPFLAGS) $(HS)/request_obj.cpp
 
-json_elements.o: JSON_elements.h JSON_elements.cpp
-	$(CC) $(CPPFLAGS) JSON_elements.cpp
+json_elements.o: $(JS)/JSON_elements.h $(JS)/JSON_elements.cpp
+	$(CC) $(CPPFLAGS) $(JS)/JSON_elements.cpp
 
-json_list.o: JSON_elements.h JSON_list.cpp
-	$(CC) $(CPPFLAGS) JSON_list.cpp
+json_list.o: $(JS)/JSON_elements.h $(JS)/JSON_list.cpp
+	$(CC) $(CPPFLAGS) $(JS)/JSON_list.cpp
 
-json_object.o: JSON_elements.h JSON_object.cpp
-	$(CC) $(CPPFLAGS) JSON_object.cpp
+json_object.o: $(JS)/JSON_elements.h $(JS)/JSON_object.cpp
+	$(CC) $(CPPFLAGS) $(JS)/JSON_object.cpp
 
-json_value.o: JSON_elements.h JSON_value.cpp
-	$(CC) $(CPPFLAGS) JSON_value.cpp
+json_value.o: $(JS)/JSON_elements.h $(JS)/JSON_value.cpp
+	$(CC) $(CPPFLAGS) $(JS)/JSON_value.cpp
 
-config_singleton.o: config_singleton.h config_singleton.cpp
-	$(CC) $(CPPFLAGS) config_singleton.cpp
+config_singleton.o: $(CP)/config_singleton.h $(CP)/config_singleton.cpp
+	$(CC) $(CPPFLAGS) $(CP)/config_singleton.cpp
 
-main.o: main.cpp
-	$(CC) $(CPPFLAGS) main.cpp
+main.o: $(DE)/main.cpp
+	$(CC) $(CPPFLAGS) $(DE)/main.cpp
 
 clean:
 	rm *.o
