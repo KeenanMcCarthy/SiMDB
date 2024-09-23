@@ -62,8 +62,10 @@ void Database::start_commandline(){
   cout << "SiMDB is running in interactive mode" << endl;
   string input;
   getline(cin, input);
-  while (input.compare("done") != 0){
-    cout << commander->run_command(input);
+  while (input.compare("exit") != 0){
+    if (input.size() != 0){
+      cout << commander->run_command(input);
+    }
     getline(cin, input);
   }
 }
