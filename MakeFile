@@ -6,6 +6,7 @@ DE = databaseEngine
 HS = httpServer
 JS = jsonImplementation
 CP = configPackage
+TS = tests
 
 #Compiler flags
 CPPFLAGS = -std=c++11 -Wall -c -g -I$(HS) -I$(DE) -I$(JS) -I$(CP)
@@ -14,10 +15,13 @@ CPPFLAGS = -std=c++11 -Wall -c -g -I$(HS) -I$(DE) -I$(JS) -I$(CP)
 OBJ = database.o command_facade.o table.o server.o command.o insert_PK_Command.o\
 make_table_command.o create_command.o set_table_command.o insert_command.o\
 get_command.o get_all_command.o delete_command.o update_command.o sum_command.o\
-transaction_commands.o condition_command.o in_command.o request_obj.o main.o\
+transaction_commands.o condition_command.o in_command.o request_obj.o\
 json_elements.o json_list.o json_value.o json_object.o config_singleton.o
 
-output: $(OBJ)
+#Test object files
+TS_OBJ = engineTests.o testRunner.o
+
+output: $(OBJ) main.o
 	$(CC) -o SiMDB.exe $(OBJ)
 
 database.o: $(DE)/database.h $(DE)/database.cpp 
@@ -94,6 +98,15 @@ config_singleton.o: $(CP)/config_singleton.h $(CP)/config_singleton.cpp
 
 main.o: $(DE)/main.cpp
 	$(CC) $(CPPFLAGS) $(DE)/main.cpp
+
+runTests: $(OBJ) $(TS_OBJ) 
+	$(CC) -o tests.exe $(OBJ) $(TS_OBJ)
+
+engineTests.o: $(TS)/engineTests.h $(TS)/engineTests.cpp
+	$(CC) $(CPPFLAGS) $(TS)/engineTests.cpp
+
+testRunner.o: $(TS)/testRunner.cpp
+	$(CC) $(CPPFLAGS) $(TS)/testRunner.cpp
 
 clean:
 	rm *.o

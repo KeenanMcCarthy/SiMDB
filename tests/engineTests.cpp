@@ -1,0 +1,44 @@
+#include"engineTests.h"
+
+void EngineTests::assertEqual(string testName, string expected, string actual){
+    if (expected != actual) {
+        throw invalid_argument("Failed " + testName + ":\n\t expected: " + expected + " \tactual value: " + actual); 
+    }
+}
+
+void EngineTests::testCreate(){
+    Database* db = new Database();
+    db->run_command("CREATE testTable: name 5, age 3;");
+    db->run_command("INSERT testTable: Bill, 47;");
+    string result = db->run_command("GET testTable: *;");
+    db->run_command("DELETE testTable;");
+    assertEqual("testCreate","Bill,47\n",result);
+}
+
+void EngineTests::testUpdate(){
+    Database* db = new Database();
+    db->run_command("CREATE employees: id 5, name 10, salary 7;");
+    db->run_command("INSERT employees: 001, Bill, 80000;");
+    db->run_command("UPDATE employees: 001, salary, 85000;");
+    string result = db->run_command("GET employees: *;");
+    db->run_command("DELETE employees;");
+    assertEqual("testUpdate","001,Bill,85000\n",result);
+}
+
+void EngineTests::testGetPK(){
+    Database* db = new Database();
+    db->run_command("CREATE employees: id 5, name 10, salary 7;");
+    db->run_command("INSERT employees: 001, Bill, 85000;");
+    string result = db->run_command("GET employees: 001;");
+    db->run_command("DELETE employees;");
+    assertEqual("testGetPK","001 Bill 85000 \n",result);
+}
+
+void EngineTests::testGetEntry(){
+    Database* db = new Database();
+    db->run_command("CREATE employees: id 5, name 10, salary 7;");
+    db->run_command("INSERT employees: 001, Bill, 85000;");
+    string result = db->run_command("GET employees.salary: 001;");
+    db->run_command("DELETE employees;");
+    assertEqual("testGetEntry","85000\n",result);
+}
