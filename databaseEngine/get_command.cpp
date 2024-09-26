@@ -17,8 +17,11 @@ string Get_Command::command(string command, int ind){
   vector<string> row = get_current_table()->table[get_current_table()->rows[pk_name]];
   string response = "";
   if (get_current_fields().size() == 0){
-    for (string entry: row){
-      response += (entry + " ");
+    for (int i=0; i<row.size(); i++){
+      response += row[i];
+      if (i != row.size()-1){
+        response += ",";
+      }
     }
   } else {
     for (string field: get_current_fields()){

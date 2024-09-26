@@ -13,6 +13,7 @@ public:
     void testUpdate();
     void testGetPK();
     void testGetEntry();
+    void conditionalGet();
 };
 
 #endif

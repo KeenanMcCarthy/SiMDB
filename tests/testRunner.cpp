@@ -16,6 +16,8 @@ int main(int argc, char **argv){
         cout << "testGetPK PASSED" << endl;
         engineTests->testGetEntry();
         cout << "testGetEntry PASSED" << endl;
+        engineTests->conditionalGet();
+        cout << "testConditionalGet PASSED" << endl;
     } catch (const invalid_argument& e) {
         cout << e.what() << endl;
     }
