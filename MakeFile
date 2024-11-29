@@ -22,7 +22,7 @@ json_elements.o json_list.o json_value.o json_object.o config_singleton.o
 TS_OBJ = engineTests.o testRunner.o
 
 output: $(OBJ) main.o
-	$(CC) -o SiMDB.exe $(OBJ)
+	$(CC) -o SiMDB.exe $(OBJ) main.o
 
 database.o: $(DE)/database.h $(DE)/database.cpp 
 	$(CC) $(CPPFLAGS) $(DE)/database.cpp
