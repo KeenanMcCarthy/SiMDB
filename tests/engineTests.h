@@ -14,7 +14,8 @@ public:
     void testGetPK();
     void testGetEntry();
     void conditionalGet();
+    void conditionalGetWithOOP();
+    void getSubquery();
 };
 
 #endif
-

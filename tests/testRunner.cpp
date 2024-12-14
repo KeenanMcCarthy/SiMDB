@@ -18,6 +18,10 @@ int main(int argc, char **argv){
         cout << "testGetEntry PASSED" << endl;
         engineTests->conditionalGet();
         cout << "testConditionalGet PASSED" << endl;
+        engineTests->conditionalGetWithOOP();
+        cout << "testConditionalGetWithOOP PASSED" << endl;
+        engineTests->getSubquery();
+        cout << "getSubquery PASSED" << endl;
     } catch (const invalid_argument& e) {
         cout << e.what() << endl;
     }
