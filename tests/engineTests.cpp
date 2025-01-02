@@ -77,3 +77,15 @@ void EngineTests::getSubquery(){
     db->run_command("DELETE overdue_timesheets;");
     assertEqual("getSubquery","002,Jan,75000\n",result);
 }
+
+void EngineTests::sumElements(){
+    Database* db = new Database();
+    db->run_command("CREATE employees: id 5, name 10, salary 7;");
+    db->run_command("INSERT employees: 001, Bill, 85000;");
+    db->run_command("INSERT employees: 002, Jan, 75000;");
+    db->run_command("INSERT employees: 003, John, 95000;");
+    db->run_command("INSERT employees: 004, Jan, 65000;");
+    string result = db->run_command("SUM employees.salary: * IF salary > 70000;");
+    db->run_command("DELETE employees;");
+    assertEqual("sumElements","255000\n",result);
+}

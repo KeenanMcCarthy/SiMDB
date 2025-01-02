@@ -16,6 +16,7 @@ public:
     void conditionalGet();
     void conditionalGetWithOOP();
     void getSubquery();
+    void sumElements();
 };
 
 #endif
