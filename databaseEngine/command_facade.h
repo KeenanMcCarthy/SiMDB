@@ -8,6 +8,12 @@ class Command;
 
 using namespace std;
 
+/**
+  * Command facade abstracts internal jsonImplementation
+  * of the command graph which processes all SiMDB commands.
+  * It contains a reference to the database object and the
+  * root node of the command graph.
+**/
 class Command_Facade{
 public:
   Command* root;

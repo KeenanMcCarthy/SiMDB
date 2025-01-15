@@ -3,6 +3,12 @@
 
 using namespace std;
 
+/**
+  * Command facade abstracts internal jsonImplementation
+  * of the command graph which processes all SiMDB commands.
+  * It contains a reference to the database object and the
+  * root node of the command graph.
+**/
 Command_Facade::Command_Facade(Database* db){
   this->db = db;
   Root_Command* root = new Root_Command(db);

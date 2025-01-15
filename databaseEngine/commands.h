@@ -7,7 +7,13 @@
 #include"table.h"
 
 using namespace std;
-
+/**
+  * Command serves as the abstract class from which all
+  * subcommands must inherit. It contains two pure virtual
+  * functions, command and rollback which must be implemented
+  * to perform custom operations on both execution and
+  * rollback for each Command implmentation.
+**/
 class Command{
 public:
   unordered_map<string, Command*> commands;
