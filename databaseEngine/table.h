@@ -8,6 +8,10 @@
 
 using namespace std;
 
+/**
+ * Table class stores an in-memory array of data as well as
+ * table schemas
+**/
 class Table{
 public:
   class SchemaObj{

@@ -18,6 +18,10 @@
 
 using namespace std;
 
+/**
+ * Database class which holds tables and implements rollback and
+ * disk persistence functionality
+**/
 class Database{
   class CommitJob{
   public:
