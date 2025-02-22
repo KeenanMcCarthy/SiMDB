@@ -89,3 +89,14 @@ void EngineTests::sumElements(){
     db->run_command("DELETE employees;");
     assertEqual("sumElements","255000\n",result);
 }
+
+void EngineTests::transactionTest(){
+    Database* db = new Database();
+    db->run_command("CREATE employees: id 5, name 10, salary 7;");
+    db->run_command("TRANSACTION START;");
+    db->run_command("INSERT employees: 001, Bill, 85000;");
+    db->run_command("TRANSACTION END;");
+    string result = db->run_command("GET employees: *;");
+    db->run_command("DELETE employees;");
+    assertEqual("transactionTest","001,Bill,85000\n",result);
+}
